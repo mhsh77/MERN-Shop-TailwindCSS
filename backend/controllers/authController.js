@@ -1,6 +1,7 @@
 const User = require('../models/user')
 const ErrorHandler = require('../utilites/errorHandler');
-const catchAsyncErrors = require('../middlewares/catchAsyncErrors')
+const catchAsyncErrors = require('../middlewares/catchAsyncErrors');
+const sendToken = require('../utilites/jwtTokens');
 
 
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
@@ -14,13 +15,8 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
             url: 'https://static1.cbrimages.com/wordpress/wp-content/uploads/2020/05/anime-eye-abilities-featured-image.jpg?q=50&fit=contain&w=1140&h=&dpr=1.5'
         }
     })
-    const token = user.getJwtToken();
-
-    res.status(201).json({
-        success: true,
-        token
-    })})
-
+    sendToken(user,200,res)
+})
 exports.loginUser = catchAsyncErrors( async (req,res,next) => {
     const {email,password} = req.body;
 
@@ -42,10 +38,6 @@ exports.loginUser = catchAsyncErrors( async (req,res,next) => {
         return next(new ErrorHandler('Incorrect password',401))
 
     }
-    const token = user.getJwtToken();
-    res.status(200).json({
-       success:true,
-       token 
-    })
+    sendToken(user,200,res)
 
 })
