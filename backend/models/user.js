@@ -54,6 +54,10 @@ userSchema.pre('save',async function (next) {
     }
     this.password = await bycrypt.hash(this.password,10)
 })
+userSchema.methods.compareUserPassword = async function (enteredpassword) {
+    return await bycrypt.compare(enteredpassword, this.password)
+
+}
 // Return JWT token
 userSchema.methods.getJwtToken = function (){
     return jwt.sign({id:this._id},process.env.JWT_SECRET,{
