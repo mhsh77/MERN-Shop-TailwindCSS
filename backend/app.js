@@ -8,7 +8,7 @@ const catchAsyncErrors = require('./middlewares/catchAsyncErrors');
 
 app.use(express.json());
 app.use(cookieParser());
-console.log(process.env.JWT_SECRET);
+//console.log(process.env.JWT_SECRET);
 
 //import routes
 const products = require('./routes/product');

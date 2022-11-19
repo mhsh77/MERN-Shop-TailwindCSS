@@ -8,8 +8,8 @@ const sendToken = (user,statusCode,res) => {
         httpOnly: true,//httpOnly cookie is not accessable in js code
 
     }
-
-    res.status(statusCode).cookie('token',options).json({
+    //console.log(token)
+    res.status(statusCode).cookie('token',token,options).json({
         success: true,
         user,
         token

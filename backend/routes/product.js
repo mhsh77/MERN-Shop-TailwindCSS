@@ -8,9 +8,9 @@ const { getProducts,newProduct,getSingleProduct,updateProduct,deleteProduct }= r
 const {isAuthenticatedUser} = require('../middlewares/auth')
 
 
-router.route('/products').get(isAuthenticatedUser,getProducts);
-router.route('/admin/product/new').post(newProduct);
+router.route('/products').get(getProducts);
+router.route('/admin/product/new').post(isAuthenticatedUser,newProduct);
 router.route('/product/:id').get(getSingleProduct)
-router.route('/admin/product/update/:id').put(updateProduct)
-router.route('/admin/product/delete/:id').delete(deleteProduct)
+router.route('/admin/product/update/:id').put(isAuthenticatedUser,updateProduct)
+router.route('/admin/product/delete/:id').delete(isAuthenticatedUser,deleteProduct)
 module.exports = router;
