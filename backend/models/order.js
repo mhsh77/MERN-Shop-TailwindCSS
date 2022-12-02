@@ -28,7 +28,7 @@ const orderSchema =  mongoose.Schema({
     user:{
         type: mongoose.Schema.Types.ObjectId,
         required:true,
-        ref:'user'
+        ref:'User'
     },
     orderItems:[{
         name:{
@@ -94,7 +94,7 @@ const orderSchema =  mongoose.Schema({
     deliveredAt:{
         type:Date,
     },
-    createdAt:{
+    createdAt: {
         type: Date,
         default: Date.now
     }
