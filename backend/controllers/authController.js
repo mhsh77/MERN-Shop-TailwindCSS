@@ -78,7 +78,43 @@ exports.resetPass = catchAsyncErrors( async (req, res, next) => {
 
     sendToken(user,200,res)
 })
+//get currently loged in user details
+exports.getUserProfile = catchAsyncErrors( async (req, res, next) => {
+    const user = await User.findById(req.user.id);
+    res.status(200).json({
+        success:true,
+        user
+    })
+})
+//UPDATE current user PROFILE
+exports.updateProfile = catchAsyncErrors( async (req, res, next) => {
+    const newUserData = {
+        name: req.body.name,
+        email: req.body.email
+    }
+    //update avatar image:TODO
+    const user = await User.findByIdAndUpdate(req.user.id,newUserData,{
+        new: true,
+        runValidators: true,
+        useFindAndModify: false
+    });
+    console.log(user);
+    res.status(200).json({
+        success:true,
 
+    })
+})
+exports.updatePassword = catchAsyncErrors( async (req, res, next) => {
+    const user = await User.findById(req.user.id).select('+password')
+    const isMached = await user.compareUserPassword(req.body.oldPassword)
+    if(!isMached){
+        return next(new ErrorHandler(`Old password is incorrect`,400))
+    }
+    user.password = req.body.password;
+    await user.save();
+    sendToken(user,200,res)
+
+})
 exports.forgetPassword = catchAsyncErrors( async (req, res, next) => {
     const user = await User.findOne({email:req.body.email});
     
