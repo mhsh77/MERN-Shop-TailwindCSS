@@ -146,3 +146,56 @@ exports.forgetPassword = catchAsyncErrors( async (req, res, next) => {
         return next(new ErrorHandler(error,message,500))
     }
 })
+
+// Admin Routes
+// get all users
+exports.allUsers = catchAsyncErrors( async (req, res, next) => {
+  const users = await User.find();
+  res.status(200).json({
+    success:true,
+    users
+  })  
+})
+
+// get user details
+exports.getUserDetails = catchAsyncErrors( async (req, res, next) => {
+    const user = await User.findById(req.params.id);
+    if(!user){
+        return next(new ErrorHandler(`User does not exist with id: ${req.params.id}`))
+    }
+    res.status(200).json({
+        success:true,
+        user
+    })
+})
+//UPDATE user profile
+exports.updateUser = catchAsyncErrors( async (req, res, next) => {
+    const newUserData = {
+        name: req.body.name,
+        email: req.body.email,
+        role:req.body.role
+    }
+    //update avatar image:TODO
+    const user = await User.findByIdAndUpdate(req.params.id,newUserData,{
+        new: true,
+        runValidators: true,
+        useFindAndModify: false
+    });
+    console.log(user);
+    res.status(200).json({
+        success:true,
+
+    })
+})
+// Delete user
+exports.deleteUser = catchAsyncErrors( async (req, res, next) => {
+    const user = await User.findById(req.params.id);
+    if(!user){
+        return next(new ErrorHandler(`User does not found with id ${req.params.id}`))
+    }
+    // remove image from cloudflare:TODO
+    await user.remove()
+    res.status(200).json({
+        success:true,
+    })
+})
