@@ -68,3 +68,42 @@ exports.deleteProduct =catchAsyncErrors( async (req,res,next) => {
         message:'product deleted successfullly',
     })
 })
+
+//reviews
+
+exports.createProductReview = catchAsyncErrors( async (req, res, next) => {
+    const { rating, comment, productId } = req.body;
+    console.log('from body',req.user._id);
+    const review = {
+        user: req.user._id,
+        name: req.user.name,
+        rating: Number(rating),
+        comment
+    }
+    //console.log('made up review',review)
+
+    const product = await Product.findById(productId)
+    //console.log('product from DB',product);
+    const isreviewed = product.reviews.find(
+        r => r.user.toString() === req.user._id.toString()//every user can only make one comment on a specific product
+    )
+    //console.log('isreviewed',isreviewed);
+    if(isreviewed){
+        product.reviews.forEach(review => {
+            console.log(review);
+            if(review.user.toString() === req.user._id.toString()){
+                review.comment = comment;
+                review.rating = rating;
+            }
+        })
+    } else {
+        product.reviews.push(review)
+        //console.log("prduct rev",product);
+        product.numOfReviews = product.reviews.length 
+    }
+    product.rating= product.reviews.reduce((acc,item)=> item.rating + acc,0)/product.reviews.lenght
+    await product.save({validateBeforeSave:false})
+    res.status(200).json({
+        success:true,
+    })
+})
