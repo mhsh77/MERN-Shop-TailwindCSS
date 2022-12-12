@@ -1,6 +1,4 @@
 import React ,{useState} from 'react'
-import Button from './Button';
-
 const Header = () => {
   let Links =[
     {name:"HOME",link:"/"},
@@ -11,34 +9,31 @@ const Header = () => {
   ];
   let [open,setOpen]=useState(false);
     return (
-      <div className='shadow-md w-full fixed top-0 left-0'>
-        <div className='md:flex items-center justify-between bg-white py-4 md:px-10 px-7'>
-          <div className='font-bold text-2xl cursor-pointer flex items-center font-[Poppins] 
-          text-gray-800'>
-            <span className='text-3xl text-indigo-600 mr-1 pt-2'>
-            <ion-icon name="logo-ionic"></ion-icon>
-            </span>
-            Designer
-          </div>
-        
-          <div onClick={()=>setOpen(!open)} className='text-3xl absolute right-8 top-6 cursor-pointer md:hidden'>
-          <ion-icon name={open ? 'close':'menu'}></ion-icon>
-          </div>
+      <div className="bg-blue-400 shadow-lg">
+        <div className='mx-auto flex justify-between container w-full text-white'>
 
-          <ul className={`md:flex md:items-center md:pb-0 pb-12 absolute md:static bg-white md:z-auto z-[-1] left-0 w-full md:w-auto md:pl-0 pl-9 transition-all duration-500 ease-in ${open ? 'top-20 ':'top-[-490px]'}`}>
-            {
-              Links.map((link)=>(
-                <li key={link.name} className='md:ml-8 text-xl md:my-0 my-7'>
-                  <a href={link.link} className='text-gray-800 hover:text-gray-400 duration-500'>{link.name}</a>
-                </li>
-              ))
-            }
-            <Button>
-              Get Started
-            </Button>
-          </ul>
+        <div className="my-3 text-3xl font-bold">MH.SHop</div>
+          <div className='relative block my-auto w-full mx-10 opacity-75'>
+          <input type="text" placeholder='Search product...' className='w-full rounded-lg py-1 pl-2 font-med'/>
+          <button>
+            <img src="https://cdn-icons-png.flaticon.com/512/49/49116.png" height={20} width={20} alt="" className='absolute top-1/2 -translate-y-1/2 right-2 '/>
+            </button>
+          </div>
+                 
+        <div className="my-auto font-light">
+          <a href="">Login</a>
+          <a href="" className='ml-2' >Card<span className='bg-red-500 py-1 px-2 rounded-md ml-1'>0</span></a>
         </div>
-    </div>
+
+
+
+        </div>
+      </div>
+      
+        
+        
+        
+    
     )
 }
 
