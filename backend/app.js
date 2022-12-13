@@ -5,7 +5,8 @@ const cookieParser = require('cookie-parser')
 
 const errorHandler = require('./middlewares/errors');
 const catchAsyncErrors = require('./middlewares/catchAsyncErrors');
-
+const cors = require('cors');
+app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 //console.log(process.env.JWT_SECRET);

@@ -1,7 +1,18 @@
 import React from 'react'
 import {BsStarFill,BsStar} from 'react-icons/bs'
+
+import { useSelector, useDispatch } from 'react-redux'
+import { GetAllProducts } from '../redux/actions/productActions'
 import MetaData from './layout/MetaData'
 function Home() {
+  const count = useSelector((state) => state.product)
+  
+  const dispatch = useDispatch()
+    setInterval(() => {
+      dispatch(GetAllProducts())
+      console.log(count);
+    }, 5000);
+  
   return (
     <div className="container w-full mx-auto">
       <MetaData title={"Home"}/>
