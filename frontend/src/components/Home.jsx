@@ -1,8 +1,10 @@
 import React from 'react'
 import {BsStarFill,BsStar} from 'react-icons/bs'
+import MetaData from './layout/MetaData'
 function Home() {
   return (
     <div className="container w-full mx-auto">
+      <MetaData title={"Home"}/>
       <div className='mt-10'>
         <h1 className='text-3xl'>Latest products</h1>
         <div className='flex flex-row m-3'>
