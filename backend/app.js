@@ -19,6 +19,12 @@ const order = require('./routes/order');
 app.use('/api/v1',products);
 app.use('/api/v1',auth);
 app.use('/api/v1',order);
+app.get('*',async (req,res,next) => {
+    res.status(404).json({
+        success:false,
+        errMessage:"Route not found"
+    })
+})
 app.use(errorHandler);
 app.use(catchAsyncErrors);
 module.exports = app
