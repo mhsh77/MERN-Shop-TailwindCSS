@@ -39,7 +39,7 @@ export const GetSingleProduct = (productID) => async (dispatch) => {
     .then(function(response){
         try {
             if(response.data.success){
-                dispatch(fetchProduct(response.data))
+                dispatch(fetchProduct(response.data.product))
                 
                 console.log(response.data);
                 dispatch(setLoading(false))
