@@ -4,7 +4,8 @@ const initialState = {
     products: [],
     productsCount: 0,
     isLoading: false,
-    error:null
+    error:'',
+    value:0,
 }
 
 export const productSlice = createSlice({
@@ -27,14 +28,18 @@ export const productSlice = createSlice({
         state.isLoading = false;
         state.productMessage = action.payload.data;
     },
+    setValue:(state, action)=> {
+      state.value = action.payload;
+    },
     setError: (state, action) => {
-      state.error = action.payload.error;
+      console.log("set error",action);
+      state.error = action.payload;
     }
 
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { fetchProducts,setLoading,removeProduct,setError } = productSlice.actions
+export const { fetchProducts,setLoading,removeProduct,setError,setValue } = productSlice.actions
 
 export default productSlice.reducer

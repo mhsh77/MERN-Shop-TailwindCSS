@@ -6,16 +6,21 @@ import { GetAllProducts } from '../redux/actions/productActions'
 import MetaData from './layout/MetaData'
 import Product from './product/Product'
 import Loading from './Loading'
+import { useAlert } from 'react-alert'
 function Home() {
   
   
   const {isLoading,products,productsCount,error} = useSelector((state) => state.product)
-  
+  const alert = useAlert()
   const dispatch = useDispatch()
     useEffect(() => {
+      if(error){
+        return alert.error(error)
+        }
       dispatch(GetAllProducts())
+      console.log(isLoading,products,productsCount,error);
       
-    }, [dispatch])
+    }, [dispatch,error,alert])
   
     
   
@@ -34,6 +39,7 @@ function Home() {
         </div>  
       </div>
     </div>)}
+    <button onClick={()=>console.log(error)}>hi</button>
     </>
     
   )
