@@ -10,7 +10,8 @@ import { useAlert } from 'react-alert'
 function Home() {
   
   
-  const {isLoading,products,productsCount,error} = useSelector((state) => state.product)
+  const {products,productsCount} = useSelector((state) => state.products)
+  const {isLoading,error} = useSelector((state) => state.errorAndLoading)
   const alert = useAlert()
   const dispatch = useDispatch()
     useEffect(() => {
