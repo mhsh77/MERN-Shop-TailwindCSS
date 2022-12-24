@@ -5,7 +5,8 @@ import { store } from './redux/store';
 import { positions , transitions,Provider as AlertProvider } from 'react-alert'
 import AlertTemplate  from 'react-alert-template-basic'
 import App from './App';
-
+import 'flowbite'
+import 'flowbite-react'
 const options = {
   timeout: 5000,
   position: positions.BOTTOM_CENTER,

@@ -1,9 +1,10 @@
 import React from 'react'
 import {BsStarFill,BsStar} from 'react-icons/bs'
+import 'flowbite';
 const starArray = [...Array(5).keys()].map(i => i + 1);
-const Rating = ({ rating }) =>
+export const Rating = ({ rating }) =>
   starArray.map(i => (
-    <BsStarFill className={rating >=i ? "text-green-500":"text-gray-50"}/>
+    <BsStarFill className={rating >=i ? "text-green-500":"text-gray-300"}/>
     
     
   
