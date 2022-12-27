@@ -1,4 +1,4 @@
-import React ,{Fragment, useEffect} from 'react'
+import React ,{Fragment, useEffect, useState} from 'react'
 
 
 import { useSelector, useDispatch } from 'react-redux'
@@ -7,9 +7,11 @@ import MetaData from './layout/MetaData'
 import Product from './product/Product'
 import Loading from './Loading'
 import { useAlert } from 'react-alert'
+import Pagination from "react-js-pagination";
 function Home() {
   
-  
+  const [currentPage,setcurrentPage] = useState(1)
+  const resPerPage = 4;
   const {products,productsCount} = useSelector((state) => state.products)
   const {isLoading,error} = useSelector((state) => state.errorAndLoading)
   const alert = useAlert()
@@ -18,12 +20,14 @@ function Home() {
       if(error){
         return alert.error(error)
         }
-      dispatch(GetAllProducts())
+      dispatch(GetAllProducts(currentPage))
       console.log(isLoading,products,productsCount,error);
       
-    }, [dispatch,error,alert])
+    }, [dispatch,error,alert,currentPage])
   
-    
+    const handlePageChange=(pageNum)=>{
+      setcurrentPage(pageNum)
+    }
   
   return (
     <>
@@ -41,6 +45,23 @@ function Home() {
       </div>
     </div>)}
     <button onClick={()=>console.log(error)}>hi</button>
+    <div className=' flex flex-col'>
+      {}
+      <Pagination
+            activePage={currentPage}
+            itemsCountPerPage={2}
+            totalItemsCount={productsCount}
+            onChange={handlePageChange}
+            nextPageText = {'Next'}
+            prevPageText = {'Perv'}
+            firstPageText = {'First'}
+            lastPageText = {'Last'}
+            innerClass={'flex justify-center'}
+            itemClass={'p-3 text-blue-300'}
+            activeLinkClass = {' text-lg font-bold text-blue-600'}
+        />
+    </div>
+    
     </>
     
   )
