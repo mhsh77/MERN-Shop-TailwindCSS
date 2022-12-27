@@ -4,6 +4,7 @@ const initialState = {
     products: [],
     productsCount: 0,
     value:0,
+    count:0
 }
 
 export const productsSlice = createSlice({
@@ -14,6 +15,7 @@ export const productsSlice = createSlice({
       console.log(action.payload);
         state.products = action.payload.products;
         state.productsCount = action.payload.productCount;
+        state.count = action.payload.count;
     },
     
     setValue:(state, action)=> {

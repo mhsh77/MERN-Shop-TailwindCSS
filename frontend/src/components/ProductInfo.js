@@ -24,7 +24,12 @@ function ProductInfo() {
         
         }, [dispatch,error,alert])
   return (
+    <>
+    <MetaData title={product.name}/>
+    {isLoading ? <Loading/>:(
+    
     <div className='container grid grid-cols-2 mx-auto min-h-screen'>
+      
       <div className='my-auto px-10'>
       <div className="h-56 sm:h-64 xl:h-80 2xl:h-96">
   <Carousel slide={false}>
@@ -71,7 +76,9 @@ function ProductInfo() {
       </div>
         
       
-    </div>
+    </div>)}
+    </>
+    
   )
 }
 

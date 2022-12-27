@@ -7,6 +7,7 @@ import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import Home from './components/Home';
 import ProductInfo from './components/ProductInfo';
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -22,6 +23,7 @@ function App() {
   return (
       <div className="App">
         <Header/>
+        
         <RouterProvider router={router} />
         <Footer/>
       </div>
