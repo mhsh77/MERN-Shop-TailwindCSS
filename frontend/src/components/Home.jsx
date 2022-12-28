@@ -8,8 +8,13 @@ import Product from './product/Product'
 import Loading from './Loading'
 import { useAlert } from 'react-alert'
 import Pagination from "react-js-pagination";
+import { useNavigate, useParams } from 'react-router-dom'
+import Header from './layout/Header'
+
 function Home() {
-  
+  const navigate = useNavigate();
+  const keyword = useParams().keyword
+  console.log(keyword);
   const [currentPage,setcurrentPage] = useState(1)
   const resPerPage = 4;
   const {products,productsCount} = useSelector((state) => state.products)
@@ -20,10 +25,10 @@ function Home() {
       if(error){
         return alert.error(error)
         }
-      dispatch(GetAllProducts(currentPage))
+      dispatch(GetAllProducts(currentPage,keyword))
       console.log(isLoading,products,productsCount,error);
       
-    }, [dispatch,error,alert,currentPage])
+    }, [dispatch,error,alert,currentPage,keyword])
   
     const handlePageChange=(pageNum)=>{
       setcurrentPage(pageNum)
@@ -31,6 +36,7 @@ function Home() {
   
   return (
     <>
+    <Header/>
     {isLoading ? <Loading/>:(
     <div className="container w-full mx-auto">
       <MetaData title={"Home"}/>
@@ -44,7 +50,9 @@ function Home() {
         </div>  
       </div>
     </div>)}
-    <button onClick={()=>console.log(error)}>hi</button>
+    <button onClick={()=>{console.log(error)
+    navigate('/product/63764ded67a46da36854a18b')
+    }}>hi</button>
     <div className=' flex flex-col'>
       {}
       <Pagination

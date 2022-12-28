@@ -7,7 +7,8 @@ import Loading from './Loading'
 import { useAlert } from 'react-alert'
 import { useParams } from 'react-router-dom'
 import { Carousel } from 'flowbite-react'
-function ProductInfo() {
+import Header from './layout/Header'
+function ProductInfo({history}) {
     const params = useParams()
     const {product} = useSelector((state) => state.singleProduct)
     const {isLoading,error} = useSelector((state) => state.errorAndLoading)
@@ -25,8 +26,9 @@ function ProductInfo() {
         }, [dispatch,error,alert])
   return (
     <>
+    <Header history={history}/>
     <MetaData title={product.name}/>
-    {isLoading ? <Loading/>:(
+    {isLoading ? <Loading />:(
     
     <div className='container grid grid-cols-2 mx-auto min-h-screen'>
       

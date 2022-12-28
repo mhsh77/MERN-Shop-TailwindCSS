@@ -18,11 +18,14 @@ const router = createBrowserRouter([
     element: <ProductInfo/>,
     
   },
+  {
+    path: "/search/:keyword",
+    element: <Home/>
+  }
 ]);
 function App() {
   return (
       <div className="App">
-        <Header/>
         
         <RouterProvider router={router} />
         <Footer/>
