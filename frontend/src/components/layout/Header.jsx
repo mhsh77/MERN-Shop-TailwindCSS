@@ -12,7 +12,7 @@ const Header = ({history}) => {
   let [open,setOpen]=useState(false);
     return (
       <div className="bg-blue-400 shadow-lg">
-        <div className='mx-auto flex justify-between container w-full text-white'>
+        <div className='mx-auto flex justify-between items-center container w-full text-white'>
 
         <div className="my-3 text-3xl font-bold">MH.SHop</div>
         <Search history={history}/>

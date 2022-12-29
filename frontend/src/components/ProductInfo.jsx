@@ -32,7 +32,7 @@ function ProductInfo({history}) {
     
     <div className='container grid grid-cols-2 mx-auto min-h-screen'>
       
-      <div className='my-auto px-10'>
+      <div className='mt-3 px-10'>
       <div className="h-56 sm:h-64 xl:h-80 2xl:h-96">
   <Carousel slide={false}>
     <img

@@ -4,9 +4,9 @@ import { useSelector,useDispatch } from 'react-redux';
 import { fetchProducts,removeProduct, setValue } from '../reducers/productsReducer';
 import { setError,setLoading } from '../reducers/errorAndLoadingReducer';
 import { fetchProduct } from '../reducers/signleProductReducer';
-export const GetAllProducts = (currentPage=1,keyword='') => async (dispatch) => {
+export const GetAllProducts = (currentPage=1,keyword='',price) => async (dispatch) => {
     dispatch(setLoading(true))
-    axios.get(`/api/v1/products?keyword=${keyword}&page=${currentPage}`)
+    axios.get(`/api/v1/products?keyword=${keyword}&page=${currentPage}&price[lte]=${price[1]}&price[gte]=${price[0]}`)
     .catch(error=>{
         console.log("errror is ",error.response.data.errMessage);
         dispatch(setError(error.response.data.errMessage))

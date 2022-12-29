@@ -10,12 +10,17 @@ import { useAlert } from 'react-alert'
 import Pagination from "react-js-pagination";
 import { useNavigate, useParams } from 'react-router-dom'
 import Header from './layout/Header'
+import Slider  from 'rc-slider';
+import 'rc-slider/assets/index.css';
+const createSliderWithTooltip = Slider.createSliderWithTooltip;
+
 
 function Home() {
   const navigate = useNavigate();
   const keyword = useParams().keyword
   console.log(keyword);
   const [currentPage,setcurrentPage] = useState(1)
+  const [price, setPrice] = useState([1, 1000])
   const resPerPage = 4;
   const {products,productsCount} = useSelector((state) => state.products)
   const {isLoading,error} = useSelector((state) => state.errorAndLoading)
@@ -25,10 +30,10 @@ function Home() {
       if(error){
         return alert.error(error)
         }
-      dispatch(GetAllProducts(currentPage,keyword))
+      dispatch(GetAllProducts(currentPage,keyword,price))
       console.log(isLoading,products,productsCount,error);
       
-    }, [dispatch,error,alert,currentPage,keyword])
+    }, [dispatch,error,alert,currentPage,keyword,price])
   
     const handlePageChange=(pageNum)=>{
       setcurrentPage(pageNum)
@@ -37,6 +42,42 @@ function Home() {
   return (
     <>
     <Header/>
+    {keyword ?(
+    <div className='w-full flex flex-col items-center justify-center'>
+      <div className='container flex flex-row justify-between items-center px-96'>
+      <h1 className='px-5'>price:</h1>
+      <div className='flex flex-row items-center my-10'>
+      <h2 className='px-5 text-gray-500 text-sm w-48'>from:${price[0]} to ${price[1]}</h2>
+      <div className='w-96'>
+      <Slider
+        range
+        marks={{
+        1: `$1`,
+        1000: `$1000`
+        }}
+        min={1}
+        max={1000}
+        defaultValue={[1, 1000]}
+        tipFormatter={value => `$${value}`}
+        tipProps={{
+        placement: "top",
+        visible: true
+        }}
+        value={price}
+        onChange={price => setPrice(price)}
+      />
+      </div>
+      </div>
+      
+      
+      </div>
+      
+    </div>):(
+    <>
+    </>) }
+    
+    
+    
     {isLoading ? <Loading/>:(
     <div className="container w-full mx-auto">
       <MetaData title={"Home"}/>
