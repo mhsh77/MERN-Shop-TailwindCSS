@@ -26,14 +26,30 @@ function Home() {
   const {isLoading,error} = useSelector((state) => state.errorAndLoading)
   const alert = useAlert()
   const dispatch = useDispatch()
+  var cate = [
+    'Electronics',
+    'Cameras',
+    'Laptop',
+    'Accessories',
+    'Headphones',
+    'Food',
+    'Books',
+    'Clothes/Shoes',
+    'Beauity/Health',
+    'Sports',
+    'Outdoor',
+    'Home'
+]
+  const [cat,setcat] = useState('')
     useEffect(() => {
       if(error){
         return alert.error(error)
         }
-      dispatch(GetAllProducts(currentPage,keyword,price))
+      console.log('cat is',cat);
+      dispatch(GetAllProducts(currentPage,keyword,price,cat))
       console.log(isLoading,products,productsCount,error);
       
-    }, [dispatch,error,alert,currentPage,keyword,price])
+    }, [dispatch,error,alert,currentPage,keyword,price,cat])
   
     const handlePageChange=(pageNum)=>{
       setcurrentPage(pageNum)
@@ -45,31 +61,41 @@ function Home() {
     {keyword ?(
     <div className='w-full flex flex-col items-center justify-center'>
       <div className='container flex flex-row justify-between items-center px-96'>
-      <h1 className='px-5'>price:</h1>
-      <div className='flex flex-row items-center my-10'>
-      <h2 className='px-5 text-gray-500 text-sm w-48'>from:${price[0]} to ${price[1]}</h2>
-      <div className='w-96'>
-      <Slider
-        range
-        marks={{
-        1: `$1`,
-        1000: `$1000`
-        }}
-        min={1}
-        max={1000}
-        defaultValue={[1, 1000]}
-        tipFormatter={value => `$${value}`}
-        tipProps={{
-        placement: "top",
-        visible: true
-        }}
-        value={price}
-        onChange={price => setPrice(price)}
-      />
-      </div>
+        <h1 className='px-5'>price:</h1>
+        <div className='flex flex-row items-center my-10'>
+          <h2 className='px-5 text-gray-500 text-sm w-48'>from:${price[0]} to ${price[1]}</h2>
+          <div className='w-96'>
+            <Slider
+              range
+              marks={{
+              1: `$1`,
+              1000: `$1000`
+              }}
+              min={1}
+              max={1000}
+              defaultValue={[1, 1000]}
+              tipFormatter={value => `$${value}`}
+              tipProps={{
+              placement: "top",
+              visible: true
+              }}
+              value={price}
+              onChange={price => setPrice(price)}
+            />
+        </div>
       </div>
       
       
+      
+      </div>
+      <div>
+        <h1>Category</h1>
+        <div className='flex flex-row'>
+          {cate.map((item)=>(
+            <h1 className={`px-3 py-5${item == cat? 'text-blue-700 text-lg font-bold':'text-blue-300'}`} onClick={()=>setcat(item)}>{item}</h1>
+          ))}
+        </div>
+        
       </div>
       
     </div>):(
@@ -91,9 +117,6 @@ function Home() {
         </div>  
       </div>
     </div>)}
-    <button onClick={()=>{console.log(error)
-    navigate('/product/63764ded67a46da36854a18b')
-    }}>hi</button>
     <div className=' flex flex-col'>
       {}
       <Pagination
