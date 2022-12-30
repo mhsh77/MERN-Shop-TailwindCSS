@@ -4,10 +4,10 @@ import { useSelector,useDispatch } from 'react-redux';
 import { fetchProducts,removeProduct, setValue } from '../reducers/productsReducer';
 import { setError,setLoading } from '../reducers/errorAndLoadingReducer';
 import { fetchProduct } from '../reducers/signleProductReducer';
-export const GetAllProducts = (currentPage=1,keyword='',price,cat) => async (dispatch) => {
+export const GetAllProducts = (currentPage=1,keyword='',price,cat,rating=0) => async (dispatch) => {
     dispatch(setLoading(true))
     if(cat==''){
-        axios.get(`/api/v1/products?keyword=${keyword}&page=${currentPage}&price[lte]=${price[1]}&price[gte]=${price[0]}`)
+        axios.get(`/api/v1/products?keyword=${keyword}&page=${currentPage}&price[lte]=${price[1]}&price[gte]=${price[0]}&rating[gte]=${rating}`)
         .catch(error=>{
             console.log("errror is ",error.response.data.errMessage);
             dispatch(setError(error.response.data.errMessage))
@@ -30,7 +30,7 @@ export const GetAllProducts = (currentPage=1,keyword='',price,cat) => async (dis
             
         })
     }else{
-        axios.get(`/api/v1/products?keyword=${keyword}&page=${currentPage}&price[lte]=${price[1]}&price[gte]=${price[0]}&category=${cat}`)
+        axios.get(`/api/v1/products?keyword=${keyword}&page=${currentPage}&price[lte]=${price[1]}&price[gte]=${price[0]}&category=${cat}&rating[gte]=${rating}`)
         .catch(error=>{
             console.log("errror is ",error.response.data.errMessage);
             dispatch(setError(error.response.data.errMessage))

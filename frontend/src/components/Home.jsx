@@ -4,7 +4,7 @@ import React ,{Fragment, useEffect, useState} from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { GetAllProducts } from '../redux/actions/productActions'
 import MetaData from './layout/MetaData'
-import Product from './product/Product'
+import Product, { Rating } from './product/Product'
 import Loading from './Loading'
 import { useAlert } from 'react-alert'
 import Pagination from "react-js-pagination";
@@ -18,6 +18,7 @@ const createSliderWithTooltip = Slider.createSliderWithTooltip;
 function Home() {
   const navigate = useNavigate();
   const keyword = useParams().keyword
+  const [rating,setrating] = useState(0)
   console.log(keyword);
   const [currentPage,setcurrentPage] = useState(1)
   const [price, setPrice] = useState([1, 1000])
@@ -46,10 +47,10 @@ function Home() {
         return alert.error(error)
         }
       console.log('cat is',cat);
-      dispatch(GetAllProducts(currentPage,keyword,price,cat))
+      dispatch(GetAllProducts(currentPage,keyword,price,cat,rating))
       console.log(isLoading,products,productsCount,error);
       
-    }, [dispatch,error,alert,currentPage,keyword,price,cat])
+    }, [dispatch,error,alert,currentPage,keyword,price,cat,rating])
   
     const handlePageChange=(pageNum)=>{
       setcurrentPage(pageNum)
@@ -83,6 +84,7 @@ function Home() {
               onChange={price => setPrice(price)}
             />
         </div>
+        
       </div>
       
       
@@ -97,7 +99,20 @@ function Home() {
         </div>
         
       </div>
-      
+      <div>
+          <h1>Rating:</h1>
+          {[5,4,3,2,1].map((item)=>
+          
+            <button className='block m-3' onClick={()=>setrating(item)}>
+              <div className='flex flex-row'>
+              <Rating rating={item}/>
+              </div>
+            </button>
+            
+          
+          
+          )}
+        </div>
     </div>):(
     <>
     </>) }
