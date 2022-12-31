@@ -2,15 +2,17 @@ import React,{useEffect} from 'react'
 import Header from './layout/Header'
 import { useDispatch,useSelector } from 'react-redux';
 
-import { login } from '../redux/actions/authenticationActions';
+import { register } from '../redux/actions/authenticationActions';
 import { useNavigate } from 'react-router-dom';
 import { useAlert } from 'react-alert'
 import Loading from './Loading';
 import { Formik } from 'formik';
-const Login = () => {
+
+function Register() {
     const {isLoading,error} = useSelector((state) => state.errorAndLoading)
-    const {user} = useSelector((state)=>state.authentication)
     const alert = useAlert()
+    const {user} = useSelector((state)=>state.authentication)
+
     console.log(user);
     const navigate = useNavigate();
     const dispatich = useDispatch();
@@ -21,7 +23,7 @@ const Login = () => {
             }
         if(user){
             alert.removeAll()
-            alert.success('loggedin')
+            alert.success('register')
             navigate('/')
         }
     }, [error,user])
@@ -37,7 +39,7 @@ const Login = () => {
                 </h1>
 
                 <Formik
-                    initialValues={{ email: '', password: '' }}
+                    initialValues={{ email: '', password: '' ,name:''}}
                     validate={values => {
                         const errors = {};
                         if (!values.email) {
@@ -51,7 +53,7 @@ const Login = () => {
                     }}
                     onSubmit={(values, { setSubmitting }) => {
                         setTimeout(() => {
-                        dispatich(login(values.email,values.password))
+                        dispatich(register(values.name,values.email,values.password))
                         setSubmitting(false);
                         }, 400);
                     }}
@@ -76,6 +78,14 @@ const Login = () => {
                         />
                         {errors.email && touched.email && errors.email}
                         <input
+                            type="text"
+                            name="name"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.name}
+                        />
+                        
+                        <input
                             type="password"
                             name="password"
                             onChange={handleChange}
@@ -90,7 +100,7 @@ const Login = () => {
                         
                     )}
                 </Formik>
-                <a href="/register">register</a>
+                <a href="/login">login</a>
             </div>
         </div>)}
 
@@ -99,4 +109,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default Register

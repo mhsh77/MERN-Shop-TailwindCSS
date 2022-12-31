@@ -12,6 +12,8 @@ import { useNavigate, useParams } from 'react-router-dom'
 import Header from './layout/Header'
 import Slider  from 'rc-slider';
 import 'rc-slider/assets/index.css';
+import { setUser } from '../redux/reducers/userReducer'
+import { me } from '../redux/actions/authenticationActions'
 const createSliderWithTooltip = Slider.createSliderWithTooltip;
 
 
@@ -19,6 +21,7 @@ function Home() {
   const navigate = useNavigate();
   const keyword = useParams().keyword
   const [rating,setrating] = useState(0)
+  const {user} = useSelector((state)=>state.authentication)
   console.log(keyword);
   const [currentPage,setcurrentPage] = useState(1)
   const [price, setPrice] = useState([1, 1000])
@@ -27,6 +30,7 @@ function Home() {
   const {isLoading,error} = useSelector((state) => state.errorAndLoading)
   const alert = useAlert()
   const dispatch = useDispatch()
+  
   var cate = [
     'Electronics',
     'Cameras',
@@ -46,7 +50,8 @@ function Home() {
       if(error){
         return alert.error(error)
         }
-      
+        dispatch(me())
+      //dispatch(setUser(localStorage.getItem('user')))
       dispatch(GetAllProducts(currentPage,keyword,price,cat,rating))
       
       
@@ -58,7 +63,7 @@ function Home() {
   
   return (
     <>
-    <Header/>
+    <Header user={user}/>
     {keyword ?(
     <div className='w-full flex flex-col items-center justify-center'>
       <div className='container flex flex-row justify-between items-center px-96'>

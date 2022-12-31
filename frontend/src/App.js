@@ -8,6 +8,7 @@ import Footer from './components/layout/Footer';
 import Home from './components/Home';
 import ProductInfo from './components/ProductInfo';
 import Login from './components/Login';
+import Register from './components/Register';
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
   {
     path: "/search/:keyword",
     element: <Home/>
+  },
+  {
+    path: "/register",
+    element: <Register/>
   },
   {
     path: "/login",
