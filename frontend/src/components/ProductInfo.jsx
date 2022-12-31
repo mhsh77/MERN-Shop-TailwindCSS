@@ -8,6 +8,7 @@ import { useAlert } from 'react-alert'
 import { useParams } from 'react-router-dom'
 import { Carousel } from 'flowbite-react'
 import Header from './layout/Header'
+import { login } from '../redux/actions/authenticationActions'
 function ProductInfo({history}) {
     const params = useParams()
     const {product} = useSelector((state) => state.singleProduct)
@@ -22,7 +23,6 @@ function ProductInfo({history}) {
             }
         console.log(params.productID);
         dispatch(GetSingleProduct(params.productID))
-        
         }, [dispatch,error,alert])
   return (
     <>

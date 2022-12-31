@@ -18,7 +18,7 @@ const Header = ({history}) => {
         <Search history={history}/>
                  
         <div className="my-auto font-light">
-          <a href="">Login</a>
+          <a href="/login">Login</a>
           <a href="" className='ml-2' >Card<span className='bg-red-500 py-1 px-2 rounded-md ml-1'>0</span></a>
         </div>
 

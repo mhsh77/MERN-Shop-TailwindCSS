@@ -46,9 +46,9 @@ function Home() {
       if(error){
         return alert.error(error)
         }
-      console.log('cat is',cat);
+      
       dispatch(GetAllProducts(currentPage,keyword,price,cat,rating))
-      console.log(isLoading,products,productsCount,error);
+      
       
     }, [dispatch,error,alert,currentPage,keyword,price,cat,rating])
   

@@ -7,6 +7,7 @@ import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import Home from './components/Home';
 import ProductInfo from './components/ProductInfo';
+import Login from './components/Login';
 
 const router = createBrowserRouter([
   {
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
   {
     path: "/search/:keyword",
     element: <Home/>
+  },
+  {
+    path: "/login",
+    element: <Login/>
   }
 ]);
 function App() {
