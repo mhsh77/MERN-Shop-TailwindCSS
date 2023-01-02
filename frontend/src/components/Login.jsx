@@ -9,22 +9,20 @@ import Loading from './Loading';
 import { Formik } from 'formik';
 const Login = () => {
     const {isLoading,error} = useSelector((state) => state.errorAndLoading)
-    const {user} = useSelector((state)=>state.authentication)
     const alert = useAlert()
-    console.log(user);
+    const {loggedIn} = useSelector((state)=> state.authentication)
+    //console.log(user);
     const navigate = useNavigate();
     const dispatich = useDispatch();
     
     useEffect(() => {
-        if(error){
-            return alert.error(error)
-            }
-        if(user){
-            alert.removeAll()
-            alert.success('loggedin')
-            navigate('/')
+        if(error!="Login first to access this recourse" && error){
+            alert.error(error)
         }
-    }, [error,user])
+        if(loggedIn){
+            navigate('/me')
+        }
+    }, [error])
     
     return (
       <>
@@ -53,6 +51,7 @@ const Login = () => {
                         setTimeout(() => {
                         dispatich(login(values.email,values.password))
                         setSubmitting(false);
+                        
                         }, 400);
                     }}
                     >
@@ -91,6 +90,7 @@ const Login = () => {
                     )}
                 </Formik>
                 <a href="/register">register</a>
+                <a href="/forgetpass">Reset Password</a>
             </div>
         </div>)}
 

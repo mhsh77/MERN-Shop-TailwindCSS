@@ -9,7 +9,7 @@ import { useParams } from 'react-router-dom'
 import { Carousel } from 'flowbite-react'
 import Header from './layout/Header'
 import { login } from '../redux/actions/authenticationActions'
-function ProductInfo({history}) {
+function ProductInfo({user,history}) {
     const params = useParams()
     const {product} = useSelector((state) => state.singleProduct)
     const {isLoading,error} = useSelector((state) => state.errorAndLoading)
@@ -18,15 +18,15 @@ function ProductInfo({history}) {
     const dispatch = useDispatch()
     const [quantity,setquantity] = useState(0)
         useEffect(() => {
-        if(error){
-            return alert.error(error)
-            }
+          if(error!="Login first to access this recourse" && error){
+            alert.error(error)
+        }
         console.log(params.productID);
         dispatch(GetSingleProduct(params.productID))
         }, [dispatch,error,alert])
   return (
     <>
-    <Header history={history}/>
+    <Header history={history} user={user}/>
     <MetaData title={product.name}/>
     {isLoading ? <Loading />:(
     

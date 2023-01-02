@@ -17,12 +17,12 @@ import { me } from '../redux/actions/authenticationActions'
 const createSliderWithTooltip = Slider.createSliderWithTooltip;
 
 
-function Home() {
+function Home({user}) {
   const navigate = useNavigate();
   const keyword = useParams().keyword
   const [rating,setrating] = useState(0)
-  const {user} = useSelector((state)=>state.authentication)
-  console.log(keyword);
+  //const {user} = useSelector((state)=>state.authentication)
+ // console.log(keyword);
   const [currentPage,setcurrentPage] = useState(1)
   const [price, setPrice] = useState([1, 1000])
   const resPerPage = 4;
@@ -47,10 +47,10 @@ function Home() {
 ]
   const [cat,setcat] = useState('')
     useEffect(() => {
-      if(error){
-        return alert.error(error)
-        }
-        dispatch(me())
+      if(error!="Login first to access this recourse" && error){
+        alert.error(error)
+      }
+        //dispatch(me())
       //dispatch(setUser(localStorage.getItem('user')))
       dispatch(GetAllProducts(currentPage,keyword,price,cat,rating))
       
@@ -63,7 +63,7 @@ function Home() {
   
   return (
     <>
-    <Header user={user}/>
+    <Header user={user} />
     {keyword ?(
     <div className='w-full flex flex-col items-center justify-center'>
       <div className='container flex flex-row justify-between items-center px-96'>

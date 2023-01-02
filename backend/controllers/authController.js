@@ -125,6 +125,7 @@ exports.updatePassword = catchAsyncErrors( async (req, res, next) => {
         return next(new ErrorHandler(`Old password is incorrect`,400))
     }
     user.password = req.body.password;
+    console.log(req.body);
     await user.save();
     sendToken(user,200,res)
 
@@ -142,6 +143,7 @@ exports.forgetPassword = catchAsyncErrors( async (req, res, next) => {
 
     const resetUrl = `${req.protocol}://${req.get('host')}/api/v1/password/reset/${resetToken}`
     const message = `your message reset token is as follow:\n\n${resetUrl}\n\n if you have not requested this email,then ignore it.`
+    console.log(resetUrl);
     try {
         await sendEmail({
             email:user.email,
@@ -189,6 +191,7 @@ exports.updateUser = catchAsyncErrors( async (req, res, next) => {
         email: req.body.email,
         role:req.body.role
     }
+    console.log(req.body);
     //update avatar image:TODO
     const user = await User.findByIdAndUpdate(req.params.id,newUserData,{
         new: true,
