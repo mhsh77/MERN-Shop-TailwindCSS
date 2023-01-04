@@ -19,6 +19,7 @@ import { useEffect } from 'react';
 import Password from './components/Password';
 import ForgotPass from './components/ForgotPass';
 import ResetPass from './components/ResetPass';
+import Navbar from './components/Navbar';
 
 function App() {
   const {user} = useSelector((state)=>state.authentication)
@@ -38,6 +39,7 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Home user={user}/>} />
+            <Route path="/nav" element={<Navbar/>}/>
             <Route path="/product/:productID" element={<ProductInfo user={user}/>} />
             <Route path="/search/:keyword" element={<Home user={user}/>} />
             <Route path="/register" element={<Register user={user}/>} />
