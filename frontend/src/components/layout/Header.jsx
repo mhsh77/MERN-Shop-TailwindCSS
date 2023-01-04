@@ -17,7 +17,6 @@ const Header = ({user,history}) => {
   const dispatch = useDispatch()
   const min1 = -1
   const plus1 = 1
-  console.log(cart);
     return (
     <>
       <div className="bg-blue-400 shadow-lg">
@@ -65,6 +64,7 @@ const Header = ({user,history}) => {
         <div>
           <h1>Total Price:</h1>
           <h2>{totalPrice}</h2>
+          <button onClick={()=>navigate('/shipping')}>Checkout</button>
         </div>
       </div>
 

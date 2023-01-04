@@ -20,6 +20,8 @@ import Password from './components/Password';
 import ForgotPass from './components/ForgotPass';
 import ResetPass from './components/ResetPass';
 import Navbar from './components/Navbar';
+import Shipping from './components/Shipping';
+import Button from './components/layout/Button';
 
 function App() {
   const {user} = useSelector((state)=>state.authentication)
@@ -48,6 +50,8 @@ function App() {
             <Route path="/newpass" element={user?<Password user={user}/>:<Login/>}/>
             <Route path="/forgetpass" element={<ForgotPass />}/>
             <Route path="/resetpass/:token" element={<ResetPass />}/>
+            <Route path='/shipping' element={<Shipping/>} />
+            <Route path='/sandbox' element={<Button/>} />
           </Routes>
         </BrowserRouter>
       </div>
