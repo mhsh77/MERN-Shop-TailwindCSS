@@ -9,34 +9,30 @@ import Loading from './Loading';
 import { Formik } from 'formik';
 
 function Register() {
-    const {isLoading,error} = useSelector((state) => state.errorAndLoading)
+     const {isLoading,error} = useSelector((state) => state.errorAndLoading)
     const alert = useAlert()
-    const {user} = useSelector((state)=>state.authentication)
-
-    console.log(user);
+    const {loggedIn} = useSelector((state)=> state.authentication)
+    //console.log(user);
     const navigate = useNavigate();
     const dispatich = useDispatch();
     
     useEffect(() => {
-        if(error){
-            return alert.error(error)
-            }
-        if(user){
-            alert.removeAll()
-            alert.success('register')
-            navigate('/')
+        if(error!="Login first to access this recourse" && error){
+            alert.error(error)
         }
-    }, [error,user])
-    
+        if(loggedIn){
+            navigate('/me')
+        }
+    }, [error,loggedIn])
     return (
       <>
         <Header/>
         {isLoading ? <Loading/>:(
-        <div className='h-screen flex bg-gray-bg1'>
-            <div className='w-full max-w-md m-auto bg-white rounded-lg border border-primaryBorder shadow-default py-10 px-16'>
-                <h1 className='text-2xl font-medium text-primary mt-4 mb-12 text-center'>
-                    Log in to your account 🔐
-                </h1>
+         <div className='flex-1 text-primary items-center flex'>
+         <div className='w-full max-w-md m-auto bg-white rounded-lg border border-primaryBorder shadow-default py-10 px-16'>
+             <h1 className='text-2xl font-medium  mt-4 mb-12 text-center'>
+                 Log in to your account 🔐
+             </h1>
 
                 <Formik
                     initialValues={{ email: '', password: '' ,name:''}}
@@ -68,13 +64,14 @@ function Register() {
                         isSubmitting,
                         /* and other goodies */
                     }) => (
-                        <form onSubmit={handleSubmit}>
+                        <form onSubmit={handleSubmit} className="flex flex-col">
                         <input
                             type="email"
                             name="email"
                             onChange={handleChange}
                             onBlur={handleBlur}
                             value={values.email}
+                            className="border-none rounded-lg shadow-md mb-2"
                         />
                         {errors.email && touched.email && errors.email}
                         <input
@@ -83,6 +80,7 @@ function Register() {
                             onChange={handleChange}
                             onBlur={handleBlur}
                             value={values.name}
+                            className="border-none rounded-lg shadow-md mb-2"
                         />
                         
                         <input
@@ -91,16 +89,20 @@ function Register() {
                             onChange={handleChange}
                             onBlur={handleBlur}
                             value={values.password}
+                            className="border-none rounded-lg shadow-md mb-2"
                         />
                         {errors.password && touched.password && errors.password}
-                        <button type="submit" disabled={isSubmitting}>
+                        <button type="submit" disabled={isSubmitting} className="bg-btn py-1 px-3 rounded-full text-white shadow-md">
                             Submit
+                        </button>
+                        <button className=" bg-btnsecondary py-1 px-3 rounded-full text-white shadow-md mt-2">
+                            Already have an account?!
                         </button>
                         </form>
                         
                     )}
                 </Formik>
-                <a href="/login">login</a>
+                
             </div>
         </div>)}
 

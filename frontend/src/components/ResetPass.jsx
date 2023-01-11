@@ -21,25 +21,25 @@ function ResetPass() {
   return (
     <>
       <Header/>
-      <div className='flex justify-center items-center w-full text-left h-screen'>
-      
-      <div className='container px-36 bg-gray-100 shadow-lg py-10 rounded-lg my-auto block max-w-7xl'>
-        <h1 className='text-5xl py-3'>ChangePassword:</h1>
-        <div className='flex flex-row'>
+      <div className='flex-1 text-primary items-center flex'>
+            <div className='w-full max-w-md m-auto bg-white rounded-lg border border-primaryBorder shadow-default py-10 px-16'>
+                <h1 className='text-2xl font-medium  mt-4 mb-12 text-center'>
+                    Reset Password
+                </h1>
           
           <form className='flex flex-col'action='submit' onSubmit={()=>{
             dispatch(restPassw(password,confpass,token));
             navigate('/login')
             }} >
             <h1 className='text-gray-500 pb-2'>Password:</h1>
-            <input className='bg-blue-300 rounded p-2 mb-10' type={'password'} value={password} onChange={e=>{setpassword(e.target.value)}}/>
+            <input className="border-none rounded-lg shadow-md mb-2" type={'password'} value={password} onChange={e=>{setpassword(e.target.value)}}/>
             <h1 className='text-gray-500 pb-2'>Confirm Password:</h1>
-            <input className='bg-blue-300 rounded p-2 mb-10' type={'password'} value={confpass} onChange={e=>{setconfpass(e.target.value)}}/>
+            <input className="border-none rounded-lg shadow-md mb-2" type={'password'} value={confpass} onChange={e=>{setconfpass(e.target.value)}}/>
             
-            <button className='bg-green-500 w-48 rounded p-2' type='submit'>Submit</button>
+            <button className="bg-btn py-1 px-3 rounded-full text-white shadow-md" type='submit'>Submit</button>
             </form>
             
-          </div>
+          
         </div>
       </div>
         

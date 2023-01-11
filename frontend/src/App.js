@@ -22,6 +22,7 @@ import ResetPass from './components/ResetPass';
 import Navbar from './components/Navbar';
 import Shipping from './components/Shipping';
 import Button from './components/layout/Button';
+import Dashboard from './components/Dashboard';
 
 function App() {
   const {user} = useSelector((state)=>state.authentication)
@@ -36,7 +37,7 @@ function App() {
   }, [dispatch])
   
   return (
-      <div className="App">
+      <div className="App bg-bgcolor text-white h-screen flex flex-col">
         
         <BrowserRouter>
           <Routes>
@@ -52,6 +53,8 @@ function App() {
             <Route path="/resetpass/:token" element={<ResetPass />}/>
             <Route path='/shipping' element={<Shipping/>} />
             <Route path='/sandbox' element={<Button/>} />
+            <Route path='/dashboard' element={user? <Dashboard/>:<Login/>} />
+
           </Routes>
         </BrowserRouter>
       </div>

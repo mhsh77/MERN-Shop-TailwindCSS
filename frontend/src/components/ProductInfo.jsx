@@ -71,12 +71,12 @@ function ProductInfo({user,history}) {
           <button className={`${quantity===0?'bg-red-200':'bg-red-500'} text-white px-2 rounded-md pb-1 mr-3`} onClick={()=>{setquantity(quantity-1);}} disabled={quantity===0?true:false}>-</button>
           <h2 className=' mr-3'>{quantity}</h2>
           <button className={`${quantity===product.stock?'bg-blue-200':'bg-blue-500'} text-white px-2 rounded-md pb-1  mr-5`} onClick={()=>(setquantity(quantity+1))} disabled={quantity===product.stock?true:false}>+</button>
-          <button className='bg-yellow-300 text-white font-light px-5 py-1 rounded-full' onClick={()=>{dispatch(addProductToCart({product,quantity}));setquantity(1)}}>Add to Card</button>
+          <button className=' bg-btn text-white font-light px-5 py-1 rounded-full' onClick={()=>{dispatch(addProductToCart({product,quantity}));setquantity(1)}}>Add to Card</button>
         </div>
         <h1 className=' border-y-2 border-gray-300 my-3 py-3'>Status: {product.stock > 0 ? "In Stock":"Out of stock"}</h1>
         <h1 className='text-3xl'>Description:</h1>
         <p className='text-sm'>{product.discription}</p>
-        <button className='bg-yellow-300 text-white font-light px-5 py-1 my-5 rounded-full'>Add Review</button>
+        <button className=' bg-btn text-white font-light px-5 py-1 my-5 rounded-full'>Add Review</button>
       </div>
         
       

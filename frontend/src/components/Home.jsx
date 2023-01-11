@@ -137,8 +137,8 @@ function Home({user}) {
         </div>  
       </div>
     </div>)}
-    <div className=' flex flex-col'>
-      {}
+    <div className=' flex flex-col overflow-x-auto'>
+      
       <Pagination
             activePage={currentPage}
             itemsCountPerPage={2}
@@ -151,6 +151,8 @@ function Home({user}) {
             innerClass={'flex justify-center'}
             itemClass={'p-3 text-blue-300'}
             activeLinkClass = {' text-lg font-bold text-blue-600'}
+            className=""
+            
         />
     </div>
     
