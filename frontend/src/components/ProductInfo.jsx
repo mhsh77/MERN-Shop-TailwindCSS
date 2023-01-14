@@ -32,7 +32,7 @@ function ProductInfo({user,history}) {
     <MetaData title={product.name}/>
     {isLoading ? <Loading />:(
     
-    <div className='container grid grid-cols-2 mx-auto min-h-screen'>
+    <div className='container grid grid-cols-2 mx-auto min-h-screen bg-bgcolor'>
       
       <div className='mt-3 px-10'>
       <div className="h-56 sm:h-64 xl:h-80 2xl:h-96">
@@ -62,24 +62,38 @@ function ProductInfo({user,history}) {
 
       </div>
       
-      <div className='text-left'>
+      <div className='text-left '>
         <h1 className='text-3xl'>{product.name}</h1>
         <h2 className='text-gray-300'>{product._id}</h2>
-        <span className='border-y-2 border-gray-300 text-gray-500 py-3 flex flex-row items-center'>{<Rating rating={product.rating}/>} ({product.rating})</span>
+        <span className='border-y-2 border-gray-500 text-gray-500 py-3 flex flex-row items-center'>{<Rating rating={product.rating}/>} ({product.rating})</span>
         <h1 className="text-3xl font-bold py-3">${product.price}</h1>
         <div className='flex justify-start items-center py-3'>
           <button className={`${quantity===0?'bg-red-200':'bg-red-500'} text-white px-2 rounded-md pb-1 mr-3`} onClick={()=>{setquantity(quantity-1);}} disabled={quantity===0?true:false}>-</button>
           <h2 className=' mr-3'>{quantity}</h2>
           <button className={`${quantity===product.stock?'bg-blue-200':'bg-blue-500'} text-white px-2 rounded-md pb-1  mr-5`} onClick={()=>(setquantity(quantity+1))} disabled={quantity===product.stock?true:false}>+</button>
-          <button className=' bg-btn text-white font-light px-5 py-1 rounded-full' onClick={()=>{dispatch(addProductToCart({product,quantity}));setquantity(1)}}>Add to Card</button>
+          <button className='  bg-btn text-white font-light px-5 py-1 rounded-full' onClick={()=>{dispatch(addProductToCart({product,quantity}));setquantity(1)}}>Add to Card</button>
         </div>
-        <h1 className=' border-y-2 border-gray-300 my-3 py-3'>Status: {product.stock > 0 ? "In Stock":"Out of stock"}</h1>
+        <h1 className='border-gray-500 border-y-2 my-3 py-3'>Status: {product.stock > 0 ? "In Stock":"Out of stock"}</h1>
         <h1 className='text-3xl'>Description:</h1>
         <p className='text-sm'>{product.discription}</p>
         <button className=' bg-btn text-white font-light px-5 py-1 my-5 rounded-full'>Add Review</button>
+        
+      </div>
+      <div>
+        <div>
+          {product.reviews?.map(element=>(
+            <div className='flex flex-col'>
+              <Rating rating={element.rating} className='flex flex-row'/>
+              <h1>{element.name}</h1>
+              <p>{element.comment}</p>
+            </div>
+            
+          ))}
+
+        </div>
       </div>
         
-      
+
     </div>)}
     </>
     

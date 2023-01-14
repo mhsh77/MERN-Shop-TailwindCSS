@@ -65,6 +65,7 @@ function Register() {
                         /* and other goodies */
                     }) => (
                         <form onSubmit={handleSubmit} className="flex flex-col">
+                            <h1 className='text-gray-500 pb-2'>Email</h1>
                         <input
                             type="email"
                             name="email"
@@ -74,6 +75,7 @@ function Register() {
                             className="border-none rounded-lg shadow-md mb-2"
                         />
                         {errors.email && touched.email && errors.email}
+                        <h1 className='text-gray-500 pb-2'>Name</h1>
                         <input
                             type="text"
                             name="name"
@@ -82,7 +84,7 @@ function Register() {
                             value={values.name}
                             className="border-none rounded-lg shadow-md mb-2"
                         />
-                        
+                        <h1 className='text-gray-500 pb-2'>Password</h1>
                         <input
                             type="password"
                             name="password"
@@ -95,7 +97,7 @@ function Register() {
                         <button type="submit" disabled={isSubmitting} className="bg-btn py-1 px-3 rounded-full text-white shadow-md">
                             Submit
                         </button>
-                        <button className=" bg-btnsecondary py-1 px-3 rounded-full text-white shadow-md mt-2">
+                        <button className=" bg-btnsecondary py-1 px-3 rounded-full text-white shadow-md mt-2" onClick={()=>navigate('/login')}>
                             Already have an account?!
                         </button>
                         </form>

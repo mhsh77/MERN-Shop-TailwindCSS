@@ -78,6 +78,7 @@ exports.deleteProduct =catchAsyncErrors( async (req,res,next) => {
 
 exports.createProductReview = catchAsyncErrors( async (req, res, next) => {
     const { rating, comment, productId } = req.body;
+    console.log( rating, comment, productId)
     console.log('from body',req.user._id);
     const review = {
         user: req.user._id,
@@ -88,11 +89,12 @@ exports.createProductReview = catchAsyncErrors( async (req, res, next) => {
     //console.log('made up review',review)
 
     const product = await Product.findById(productId)
-    //console.log('product from DB',product);
+    console.log('product from DB',product);
+    console.log('product from DB',req.user._id);
     const isreviewed = product.reviews.find(
         r => r.user.toString() === req.user._id.toString()//every user can only make one comment on a specific product
     )
-    //console.log('isreviewed',isreviewed);
+    console.log('isreviewed',isreviewed);
     if(isreviewed){
         product.reviews.forEach(review => {
             console.log(review);

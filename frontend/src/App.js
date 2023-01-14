@@ -25,11 +25,12 @@ import Button from './components/layout/Button';
 import Dashboard from './components/Dashboard';
 
 function App() {
-  const {user} = useSelector((state)=>state.authentication)
+  const {user,role} = useSelector((state)=>state.authentication)
   const dispatch = useDispatch()
   useEffect(() => {
     try {
       dispatch(me())
+      //console.log(role);
     } catch (error) {
       
     }
@@ -53,7 +54,7 @@ function App() {
             <Route path="/resetpass/:token" element={<ResetPass />}/>
             <Route path='/shipping' element={<Shipping/>} />
             <Route path='/sandbox' element={<Button/>} />
-            <Route path='/dashboard' element={user? <Dashboard/>:<Login/>} />
+            <Route path='/dashboard' element={(user && role=='admin')? <Dashboard/>:<Login/>} />
 
           </Routes>
         </BrowserRouter>

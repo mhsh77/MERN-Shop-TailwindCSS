@@ -1,6 +1,6 @@
 import axios from "axios"
 import { setError, setLoading } from "../reducers/errorAndLoadingReducer"
-import { setUser } from "../reducers/userReducer"
+import { setUser,userLogout } from "../reducers/userReducer"
 axios.defaults.withCredentials = true
 export const login =(email,password)=> async (dispatch) => {
     dispatch(setLoading(true))
@@ -72,7 +72,7 @@ export const logout = () => async (dispatch) => {
         }
     });
     if(data.success){
-        dispatch(setUser(null))
+        dispatch(userLogout())
         dispatch(setLoading(false))
         dispatch(setError(null))
         
@@ -92,7 +92,7 @@ export const updateProfile = (userData) => async (dispatch) => {
         }
     });
     if(data.success){
-        dispatch(setUser(null))
+        dispatch(userLogout())
         dispatch(setLoading(false))
         dispatch(setError(null))
         
@@ -112,7 +112,7 @@ export const updatePass = (oldPassword,password) => async (dispatch) => {
         }
     });
     if(data.success){
-        dispatch(setUser(null))
+        dispatch(userLogout())
         dispatch(setLoading(false))
         dispatch(setError(null))
         
@@ -131,7 +131,7 @@ const {data} = await axios.put(`/api/v1/password/reset/${token}`,{password,confi
         }
     });
     if(data.success){
-        dispatch(setUser(null))
+        dispatch(userLogout())
         dispatch(setLoading(false))
         dispatch(setError(null))
         
@@ -147,7 +147,7 @@ export const forgetPass = (email) => async (dispatch) => {
         }
     });
     if(data.success){
-        dispatch(setUser(null))
+        dispatch(userLogout())
         dispatch(setLoading(false))
         dispatch(setError(null))
         

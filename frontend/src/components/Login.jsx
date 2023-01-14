@@ -66,6 +66,7 @@ const Login = () => {
                         /* and other goodies */
                     }) => (
                         <form onSubmit={handleSubmit} className="flex flex-col">
+                            <h1 className='text-gray-500 pb-2'>Email</h1>
                         <input
                             type="email"
                             name="email"
@@ -75,6 +76,7 @@ const Login = () => {
                             className="border-none rounded-lg shadow-md mb-2"
                         />
                         {errors.email && touched.email && errors.email}
+                        <h1 className='text-gray-500 pb-2'>Password</h1>
                         <input
                             type="password"
                             name="password"
