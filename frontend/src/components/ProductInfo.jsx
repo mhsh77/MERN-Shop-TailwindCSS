@@ -81,7 +81,7 @@ function ProductInfo({user,history}) {
         <h1 className='text-3xl'>Description:</h1>
         <p className='text-sm'>{product.discription}</p>
         <button className=' bg-btn text-white font-light px-5 py-1 my-5 rounded-full' onClick={()=>setopen(true)} >Add Review</button>
-        <Modal show={open}>
+        <Modal show={open} onClose={()=>setopen(false)}>
           <Modal.Header>
             Add a Review
           </Modal.Header>

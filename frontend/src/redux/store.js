@@ -5,6 +5,7 @@ import signleProductReducer from './reducers/signleProductReducer'
 import  authenticationReducer  from './reducers/userReducer'
 import cartReducer from './reducers/cartReducer'
 import ShippingReducer from './reducers/ShippingReducer'
+import OrderReducer from './reducers/orderReducer'
 export const store = configureStore({
   reducer: {
     products: productsReducers,
@@ -13,5 +14,6 @@ export const store = configureStore({
     authentication:authenticationReducer,
     cart:cartReducer,
     shipping:ShippingReducer,
+    orders:OrderReducer,
   },
 })

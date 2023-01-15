@@ -4,6 +4,7 @@ import { useSelector,useDispatch } from 'react-redux';
 import { fetchProducts,removeProduct, setValue } from '../reducers/productsReducer';
 import { setError,setLoading } from '../reducers/errorAndLoadingReducer';
 import { fetchProduct } from '../reducers/signleProductReducer';
+import { fetchorders } from '../reducers/orderReducer';
 export const GetAllProducts = (currentPage=1,keyword='',price,cat,rating=0) => async (dispatch) => {
     dispatch(setLoading(true))
     if(cat==''){
@@ -90,6 +91,28 @@ export const CreateReview = (productID,rating,comment) => async (dispatch) => {
     .then(function(response){
         try {
             if(response.data.success){
+                console.log(response.data);
+                dispatch(setLoading(false))
+            }//text this fuct
+            
+        } catch (error) {
+            console.log("hi from error");
+            dispatch(setError(error.response.data.errMessage))
+        }
+        
+    })
+}
+export const GetOrderes = () => async (dispatch) => {
+    dispatch(setLoading(false))
+    axios.get('/api/v1/orders/me')
+    .catch(error=>{
+        console.log("errror is ",error.response.data.errMessage);
+        dispatch(setError(error.response.data.errMessage))
+    })
+    .then(function(response){
+        try {
+            if(response.data.success){
+                dispatch(fetchorders(response.data))
                 console.log(response.data);
                 dispatch(setLoading(false))
             }//text this fuct
