@@ -3,13 +3,14 @@ import {BsStarFill,BsStar} from 'react-icons/bs'
 import 'flowbite';
 import { useNavigate } from 'react-router-dom';
 const starArray = [...Array(5).keys()].map(i => i + 1);
-export const Rating = ({ rating }) =>
+export const Rating = ({ rating}) =>
   starArray.map(i => (
     <BsStarFill className={rating >=i ? "text-green-500":"text-gray-300"}/>
     
     
   
   ));
+  
 function Product({product}) {
   const navigate = useNavigate()
   return (

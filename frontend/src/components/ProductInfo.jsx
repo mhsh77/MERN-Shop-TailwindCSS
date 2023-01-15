@@ -1,5 +1,5 @@
 import React , {useEffect, useState} from 'react'
-import { GetSingleProduct } from '../redux/actions/productActions'
+import { CreateReview, GetSingleProduct } from '../redux/actions/productActions'
 import { useSelector, useDispatch } from 'react-redux'
 import MetaData from './layout/MetaData'
 import Product, { Rating } from './product/Product'
@@ -9,14 +9,16 @@ import { useParams } from 'react-router-dom'
 import { Carousel } from 'flowbite-react'
 import Header from './layout/Header'
 import { login } from '../redux/actions/authenticationActions'
-
-import { addProductToCart } from '../redux/reducers/cartReducer'
+import { Button,Modal } from 'flowbite-react'
+import { addProductToCart, setCart } from '../redux/reducers/cartReducer'
+import {BsStarFill,BsStar} from 'react-icons/bs'
 function ProductInfo({user,history}) {
     const params = useParams()
     const {product} = useSelector((state) => state.singleProduct)
     const {isLoading,error} = useSelector((state) => state.errorAndLoading)
     const alert = useAlert()
-    
+    const starArray = [...Array(5).keys()].map(i => i + 1);
+    const [rat,setrat] = useState(0)
     const dispatch = useDispatch()
     const [quantity,setquantity] = useState(1)
         useEffect(() => {
@@ -26,6 +28,8 @@ function ProductInfo({user,history}) {
         console.log(params.productID);
         dispatch(GetSingleProduct(params.productID))
         }, [dispatch,error,alert])
+    const [open,setopen] = useState(false);
+    const [commentVal,setcommentVal] = useState('')
   return (
     <>
     <Header history={history} user={user}/>
@@ -76,14 +80,51 @@ function ProductInfo({user,history}) {
         <h1 className='border-gray-500 border-y-2 my-3 py-3'>Status: {product.stock > 0 ? "In Stock":"Out of stock"}</h1>
         <h1 className='text-3xl'>Description:</h1>
         <p className='text-sm'>{product.discription}</p>
-        <button className=' bg-btn text-white font-light px-5 py-1 my-5 rounded-full'>Add Review</button>
-        
+        <button className=' bg-btn text-white font-light px-5 py-1 my-5 rounded-full' onClick={()=>setopen(true)} >Add Review</button>
+        <Modal show={open}>
+          <Modal.Header>
+            Add a Review
+          </Modal.Header>
+          <Modal.Body>
+            <div className="space-y-6">
+              <h1>Rating:</h1>
+              <div className='flex flex-row items-center justify-center'>
+              {starArray.map(i => (
+                <button onClick={()=>setrat(i)}>
+                    <BsStarFill className={rat >=i ? "text-green-500":"text-gray-300"} fontSize={50}/>
+                </button>
+                
+                
+              
+              ))}
+              
+              </div>
+                
+              <h1>comment:</h1>
+              <input type="text" name="text" id=""  className='w-full h-40 border-gray rounded-lg shadow-md mb-2 ' value={commentVal} onChange={e => setcommentVal(e.target.value)}/>
+            </div>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={()=>{setopen(false)
+            dispatch(CreateReview(product._id,rat,commentVal))
+            }}>
+              Submit
+            </Button>
+            
+          </Modal.Footer>
+        </Modal>  
+            
+            
+          
       </div>
       <div>
         <div>
           {product.reviews?.map(element=>(
             <div className='flex flex-col'>
-              <Rating rating={element.rating} className='flex flex-row'/>
+              <div className='flex flex-row'>
+                <Rating rating={element.rating} />
+              </div>
+              
               <h1>{element.name}</h1>
               <p>{element.comment}</p>
             </div>

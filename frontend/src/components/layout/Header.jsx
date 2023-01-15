@@ -3,6 +3,8 @@ import Search from './Search';
 import {Route, useNavigate} from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import { addProductToCart, removeProductFromCart } from '../../redux/reducers/cartReducer';
+import { Dropdown } from 'flowbite-react';
+import { logout } from '../../redux/actions/authenticationActions';
 function useOutsideAlerter(ref) {
   
 }
@@ -45,15 +47,25 @@ const Header = ({user,history}) => {
         <button className="my-3 text-lg font-bold md:text-3xl" onClick={()=>navigate('/')}>MH.SHop</button>
         <Search history={history} />
                  
-        <div className="my-auto font-light">
-        
-          <button onClick={()=>{
-            if(user){
-              navigate('/me')
-            }else{
-              navigate('/login')
-            }
-          }}>{user?user.name:'Login'}</button>
+        <div className="my-auto font-light flex flex-row">
+          {user?(
+            <Dropdown label={user?user.name:''} className='bg-white' inline={true}>
+            <Dropdown.Item onClick={()=>navigate('/dashboard')}>
+              Dashboard
+            </Dropdown.Item>
+            <Dropdown.Item>
+              Orders
+            </Dropdown.Item>
+            <Dropdown.Item>
+              Profile
+            </Dropdown.Item>
+            <Dropdown.Divider />
+            <Dropdown.Item onClick={()=>dispatch(logout())}>
+              Log Out
+            </Dropdown.Item>
+          </Dropdown>
+          ):(<button onClick={()=>navigate('/login')}>Login</button>)}
+          
           <a className='ml-2' onClick={()=>setOpen(true)}>Card<span className='bg-red-500 py-1 px-2 rounded-md ml-1'>{cart?.length}</span></a>
         </div>
 
@@ -61,7 +73,7 @@ const Header = ({user,history}) => {
 
         </div>
       </div>
-      <div ref={wrapperRef} className={`${open?'block':'hidden'} w-1/3 ml-auto border-l-4 border-indigo-500 h-screen absolute  inset-y-0 right-0 bg-bgcolor`}>
+      <div ref={wrapperRef} className={`${open?'block':'hidden'} md:w-1/3 w-96 ml-auto border-l-4 border-indigo-500 h-screen absolute  inset-y-0 right-0 bg-bgcolor`}>
         <div className='flex flex-row justify-between p-3 border-b-2 border-solid border-black'>
           <h1 className='text-2xl'>Cart:</h1>
           <button onClick={()=>setOpen(false)}>X</button>

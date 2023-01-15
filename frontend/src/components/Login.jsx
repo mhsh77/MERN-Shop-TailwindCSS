@@ -22,7 +22,7 @@ const Login = () => {
         if(loggedIn){
             navigate('/me')
         }
-    }, [error])
+    }, [error,loggedIn])
     
     return (
       <>

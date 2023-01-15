@@ -79,3 +79,25 @@ export const GetSingleProduct = (productID) => async (dispatch) => {
         
     })
 }
+
+export const CreateReview = (productID,rating,comment) => async (dispatch) => {
+    dispatch(setLoading(true))
+    axios.put(`/api/v1/review`,{"productId":productID,"rating":rating,"comment":comment})
+    .catch(error=>{
+        console.log("errror is ",error.response.data.errMessage);
+        dispatch(setError(error.response.data.errMessage))
+    })
+    .then(function(response){
+        try {
+            if(response.data.success){
+                console.log(response.data);
+                dispatch(setLoading(false))
+            }//text this fuct
+            
+        } catch (error) {
+            console.log("hi from error");
+            dispatch(setError(error.response.data.errMessage))
+        }
+        
+    })
+}

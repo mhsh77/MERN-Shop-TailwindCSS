@@ -23,6 +23,7 @@ import Navbar from './components/Navbar';
 import Shipping from './components/Shipping';
 import Button from './components/layout/Button';
 import Dashboard from './components/Dashboard';
+import Orders from './components/Orders';
 
 function App() {
   const {user,role} = useSelector((state)=>state.authentication)
@@ -55,7 +56,7 @@ function App() {
             <Route path='/shipping' element={<Shipping/>} />
             <Route path='/sandbox' element={<Button/>} />
             <Route path='/dashboard' element={(user && role=='admin')? <Dashboard/>:<Login/>} />
-
+            <Route path='/orders' element={(user)? <Orders user={user}/>:<Login/>} />
           </Routes>
         </BrowserRouter>
       </div>
