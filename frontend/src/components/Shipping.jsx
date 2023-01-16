@@ -5,6 +5,9 @@ import { useNavigate } from 'react-router-dom';
 import { logout, updatePass, updateProfile } from '../redux/actions/authenticationActions';
 import { addAddress } from '../redux/reducers/ShippingReducer';
 import Header from './layout/Header';
+import Loading from './Loading';
+import { Formik } from 'formik';
+import { Radio } from 'flowbite-react';
 
 function Shipping({user}) {
     const dispatch = useDispatch();
@@ -35,44 +38,132 @@ function Shipping({user}) {
     
     <>
       <Header user={user}/>
-      <div className='flex justify-center items-center w-full text-left h-screen'>
-      
-      <div className='container px-36 bg-gray-100 shadow-lg py-10 rounded-lg my-auto block max-w-7xl'>
-        <h1 className='text-5xl py-3'>Shipping Info:</h1>
-        <button className='bg-green-500 w-48 rounded p-2' onClick={()=>setshowform(true)}>Create New Address</button>
-        <div className='flex flex-row'>
-            {showform?<form className='flex flex-col'action='submit' onSubmit={()=>{
-            dispatch(addAddress({address,city,zipCode,phoneNo,country}));
-            navigate('/')
-            }} >
-            <h1 className='text-gray-500 pb-2'>Address:</h1>
-            <input className='bg-blue-300 rounded p-2 mb-10' type={'text'} value={address} onChange={e=>{setaddress(e.target.value)}}/>
-            <h1 className='text-gray-500 pb-2'>City:</h1>
-            <input className='bg-blue-300 rounded p-2 mb-10' type={'text'} value={city} onChange={e=>{setcity(e.target.value)}}/>
-            <h1 className='text-gray-500 pb-2'>Phone No:</h1>
-            <input className='bg-blue-300 rounded p-2 mb-10' type={'text'} value={phoneNo} onChange={e=>{setphoneNo(e.target.value)}}/>
-            <h1 className='text-gray-500 pb-2'>Postal Code:</h1>
-            <input className='bg-blue-300 rounded p-2 mb-10' type={'text'} value={zipCode} onChange={e=>{setzipCode(e.target.value)}}/>
-            <h1 className='text-gray-500 pb-2'>Country:</h1>
-            <input className='bg-blue-300 rounded p-2 mb-10' type={'text'} value={country} onChange={e=>{setcountry(e.target.value)}}/>
-            
-            <button className='bg-green-500 w-48 rounded p-2' type='submit'>Submit</button>
-            </form>
+      <div className='flex-1 text-primary items-center flex'>
+            <div className='w-full max-w-md m-auto bg-white rounded-lg border border-primaryBorder shadow-default py-10 px-16'>
+                <h1 className='text-2xl font-medium  mt-4 mb-12 text-center'>
+                    Shipping Addresses!!
+                </h1>
+
+            {showform?<Formik
+                    initialValues={{ address: '', city: '',phoneNo:'',postalCode:'',Country:'' }}
+                    validate={values => {
+                        const errors = {};
+                        if(!values.address){
+                            errors.address = 'Required'
+                        }
+                        if(!values.city){
+                            errors.city = 'Required'
+                        }
+                        if(!values.phoneNo){
+                            errors.phoneNo = 'Required'
+                        }
+                        if(!values.postalCode){
+                            errors.postalCode = 'Required'
+                        }
+                        if(!values.Country){
+                            errors.Country = 'Required'
+                        }
+                        return errors
+                    }} 
+                    onSubmit={(values, { setSubmitting }) => {
+                        setTimeout(() => {
+                        dispatch(addAddress({"address":values.address,"city":values.city,"postalCo":values.postalCode,"phoneNo":values.phoneNo,"country":values.Country}))
+                        setSubmitting(false);
+                        
+                        }, 400);
+                    }}
+                    >
+                    {({
+                        values,
+                        errors,
+                        touched,
+                        handleChange,
+                        handleBlur,
+                        handleSubmit,
+                        isSubmitting,
+                        /* and other goodies */
+                    }) => (
+                        <form onSubmit={handleSubmit} className="flex flex-col">
+                            <h1 className='text-gray-500 pb-2'>Address</h1>
+                        <input
+                            type="address"
+                            name="address"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.address}
+                            className="border-none rounded-lg shadow-md mb-2 px-1 py-2"
+                        />
+                        <h2 className='text-red-400 font-semibold'>{errors.address && touched.address && errors.address}</h2>
+                        <h1 className='text-gray-500 pb-2'>City</h1>
+                        <input
+                            type="address"
+                            name="city"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.city}
+                            className="border-none rounded-lg shadow-md mb-2 px-1 py-2"
+                        />
+                        <h2 className='text-red-400 font-semibold'>{errors.city && touched.city && errors.city}</h2>
+                        <h1 className='text-gray-500 pb-2'>Postal Code</h1>
+                        <input
+                            type="number"
+                            name="postalCode"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.postalCode}
+                            className="border-none rounded-lg shadow-md mb-2 px-1 py-2"
+                        />
+                        <h2 className='text-red-400 font-semibold'>{errors.postalCode && touched.postalCode && errors.postalCode}</h2>
+                        <h1 className='text-gray-500 pb-2'>Country</h1>
+                        <input
+                            type="text"
+                            name="Country"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.Country}
+                            className="border-none rounded-lg shadow-md mb-2 px-1 py-2"
+                        />
+                        <h2 className='text-red-400 font-semibold'>{errors.Country && touched.Country && errors.Country}</h2>
+                        <h1 className='text-gray-500 pb-2'>Phone No</h1>
+                        <input
+                            type="text"
+                            name="phoneNo"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.phoneNo}
+                            className="border-none rounded-lg shadow-md mb-2 px-1 py-2"
+                        />
+                        <h2 className='text-red-400 font-semibold'>{errors.phoneNo && touched.phoneNo && errors.phoneNo}</h2>
+                        
+                        <button type="submit" disabled={isSubmitting} className="bg-btn py-1 px-3 rounded-full text-white shadow-md">
+                            Creating new address
+                        </button>
+                        </form>
+                        
+                    )}
+                </Formik>
             :<></>}
           
-          <div className='bg-red-500'>
-          {addresses.map((element)=>(
-            <label><input type="radio" name={element.address} value={element} checked={element===Seladdress} onChange={e=>setSeladdress(e.target.value)}/> {element.address} </label>
+          
+          {prevadd?(
+            <>
+            <div className='flex flex-col justify-start items-center'>
+            {addresses.map((element)=>(
+            <label><Radio type="radio" name={element.address} value={element} checked={element===Seladdress} onChange={e=>setSeladdress(e.target.value)}/> {element.address} </label>
          
           ))}
-            <button className='bg-green-500 w-48 rounded p-2' onClick={()=>setshowform(true)}>Create New Address</button>
+          <button className='bg-btn py-1 px-3 rounded-full text-white shadow-md' onClick={()=>setshowform(true)}>Create New Address</button>
+          {Seladdress?(<button className='bg-btnsecondary py-1 px-3 rounded-full text-white shadow-md' onClick={()=>setshowform(true)}>Submit Order</button>):(<></>)}
           </div>
+          </>
+          ):<></>}
+            
           
-          <button className='bg-green-500 w-48 rounded p-2' onClick={()=>console.log(Seladdress)}>Submit Order</button>
+        
             
           </div>
         </div>
-      </div>
+      
         
         
     

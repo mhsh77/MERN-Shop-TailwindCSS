@@ -53,10 +53,10 @@ const Header = ({user,history}) => {
             <Dropdown.Item onClick={()=>navigate('/dashboard')}>
               Dashboard
             </Dropdown.Item>
-            <Dropdown.Item>
+            <Dropdown.Item  onClick={()=>navigate('/orders')}>
               Orders
             </Dropdown.Item>
-            <Dropdown.Item>
+            <Dropdown.Item  onClick={()=>navigate('/me')}>
               Profile
             </Dropdown.Item>
             <Dropdown.Divider />
@@ -93,9 +93,9 @@ const Header = ({user,history}) => {
 
                   <h2 className='pl-2 text-xl'>cost: {item.price*item.quantity}</h2>
                   <div className='flex flex-row'>
-                    <button className={`bg-red-500 text-white px-2 rounded-md pb-1 mr-3`} onClick={()=>{dispatch(addProductToCart({"product":item,"quantity":min1}))}}>-</button>
+                    <button className={`bg-red-500 text-white px-2 rounded-md pb-1 mr-3 w-7 h-7`} onClick={()=>{dispatch(addProductToCart({"product":item,"quantity":min1}))}}>-</button>
                     <h2 className=' mr-3'>{item.quantity}</h2>
-                    <button className={`bg-blue-500 text-white px-2 rounded-md pb-1  mr-5`} onClick={()=>{dispatch(addProductToCart({"product":item,"quantity":plus1}))}}>+</button>
+                    <button className={`bg-blue-500 text-white px-2 rounded-md pb-1  mr-5 w-7 h-7`} onClick={()=>{dispatch(addProductToCart({"product":item,"quantity":plus1}))}}>+</button>
                   </div>
                   
               </div>
