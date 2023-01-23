@@ -14,7 +14,7 @@ export const shippingSlice = createSlice({
             let address={
                 "address":action.payload.address,
                 "city":action.payload.city,
-                "postalCo":action.payload.zipCode,
+                "postalCode":action.payload.postalCode,
                 "phoneNo":action.payload.phoneNo,
                 "country":action.payload.country
             }

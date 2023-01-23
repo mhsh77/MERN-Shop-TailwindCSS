@@ -22,6 +22,7 @@ export const GetAllProducts = (currentPage=1,keyword='',price,cat,rating=0) => a
                     
                     console.log(response.data);
                     dispatch(setLoading(false))
+                    dispatch(setError(null))
                 }
                 
             } catch (error) {

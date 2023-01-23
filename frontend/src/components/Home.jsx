@@ -125,36 +125,40 @@ function Home({user}) {
     
     
     {isLoading ? <Loading/>:(
+      <>
     <div className="container w-full mx-auto">
       <MetaData title={"Home"}/>
       <div className='mt-10'>
         <h1 className='text-3xl'>Latest products</h1>
-        <div className='flex flex-row m-3'>
+        <div className='flex flex-row m-3 overflow-scroll scrollbar-hide'>
         
         {products && products?.map(product => (
           <Product product={product}/>
         ))} 
         </div>  
       </div>
-    </div>)}
-    <div className=' flex flex-col overflow-x-auto'>
-      
-      <Pagination
-            activePage={currentPage}
-            itemsCountPerPage={2}
-            totalItemsCount={productsCount}
-            onChange={handlePageChange}
-            nextPageText = {'Next'}
-            prevPageText = {'Perv'}
-            firstPageText = {'First'}
-            lastPageText = {'Last'}
-            innerClass={'flex justify-center'}
-            itemClass={'p-3 text-blue-300'}
-            activeLinkClass = {' text-lg font-bold text-blue-600'}
-            className=""
-            
-        />
     </div>
+    <div className=' flex flex-col'>
+      
+    <Pagination
+          activePage={currentPage}
+          itemsCountPerPage={4}
+          totalItemsCount={productsCount}
+          onChange={handlePageChange}
+          nextPageText = {'Next'}
+          prevPageText = {'Perv'}
+          firstPageText = {'First'}
+          lastPageText = {'Last'}
+          innerClass={'flex justify-center'}
+          itemClass={'p-3 text-blue-300'}
+          activeLinkClass = {' text-lg font-bold text-blue-600'}
+          className=""
+          
+      />
+  </div>
+  </>
+  )}
+    
     
     </>
     

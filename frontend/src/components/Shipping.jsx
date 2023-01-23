@@ -8,6 +8,7 @@ import Header from './layout/Header';
 import Loading from './Loading';
 import { Formik } from 'formik';
 import { Radio } from 'flowbite-react';
+import { newOrder } from '../redux/actions/orderActions';
 
 function Shipping({user}) {
     const dispatch = useDispatch();
@@ -19,8 +20,8 @@ function Shipping({user}) {
     const [zipCode,setzipCode] = useState('');
     const [country,setcountry] = useState('');
     const [showform,setshowform] = useState(false);
-    
-    const [Seladdress,setSeladdress] = useState('');
+    const {cart,totalPrice,totalNum} = useSelector((state)=>state.cart)
+    const [Seladdress,setSeladdress] = useState({});
     const navigate = useNavigate()
     const alert = useAlert()
     if(error!=="Login first to access this recourse" && error){
@@ -29,7 +30,7 @@ function Shipping({user}) {
     useEffect(() => {
       setshowform(!prevadd)
     
-      
+      console.log(Seladdress);
     }, [])
     
 
@@ -45,7 +46,7 @@ function Shipping({user}) {
                 </h1>
 
             {showform?<Formik
-                    initialValues={{ address: '', city: '',phoneNo:'',postalCode:'',Country:'' }}
+                    initialValues={{ address: '', city: '',phoneNo:'',postalCode:'',country:'' }}
                     validate={values => {
                         const errors = {};
                         if(!values.address){
@@ -60,14 +61,14 @@ function Shipping({user}) {
                         if(!values.postalCode){
                             errors.postalCode = 'Required'
                         }
-                        if(!values.Country){
-                            errors.Country = 'Required'
+                        if(!values.country){
+                            errors.country = 'Required'
                         }
                         return errors
                     }} 
                     onSubmit={(values, { setSubmitting }) => {
                         setTimeout(() => {
-                        dispatch(addAddress({"address":values.address,"city":values.city,"postalCo":values.postalCode,"phoneNo":values.phoneNo,"country":values.Country}))
+                        dispatch(addAddress({"address":values.address,"city":values.city,"postalCode":values.postalCode,"phoneNo":values.phoneNo,"country":values.country}))
                         setSubmitting(false);
                         
                         }, 400);
@@ -114,16 +115,16 @@ function Shipping({user}) {
                             className="border-none rounded-lg shadow-md mb-2 px-1 py-2"
                         />
                         <h2 className='text-red-400 font-semibold'>{errors.postalCode && touched.postalCode && errors.postalCode}</h2>
-                        <h1 className='text-gray-500 pb-2'>Country</h1>
+                        <h1 className='text-gray-500 pb-2'>country</h1>
                         <input
                             type="text"
-                            name="Country"
+                            name="country"
                             onChange={handleChange}
                             onBlur={handleBlur}
-                            value={values.Country}
+                            value={values.country}
                             className="border-none rounded-lg shadow-md mb-2 px-1 py-2"
                         />
-                        <h2 className='text-red-400 font-semibold'>{errors.Country && touched.Country && errors.Country}</h2>
+                        <h2 className='text-red-400 font-semibold'>{errors.country && touched.country && errors.country}</h2>
                         <h1 className='text-gray-500 pb-2'>Phone No</h1>
                         <input
                             type="text"
@@ -148,12 +149,19 @@ function Shipping({user}) {
           {prevadd?(
             <>
             <div className='flex flex-col justify-start items-center'>
+                <h1>Choose an address</h1>
             {addresses.map((element)=>(
-            <label><Radio type="radio" name={element.address} value={element} checked={element===Seladdress} onChange={e=>setSeladdress(e.target.value)}/> {element.address} </label>
+            <label><Radio type="radio" name={element.address} value={element} checked={element===Seladdress} onChange={e=>setSeladdress(element)}/> {element.address} </label>
          
           ))}
           <button className='bg-btn py-1 px-3 rounded-full text-white shadow-md' onClick={()=>setshowform(true)}>Create New Address</button>
-          {Seladdress?(<button className='bg-btnsecondary py-1 px-3 rounded-full text-white shadow-md' onClick={()=>setshowform(true)}>Submit Order</button>):(<></>)}
+          {Seladdress?(<button className='bg-btnsecondary py-1 px-3 rounded-full text-white shadow-md my-2' onClick={()=>{
+            setshowform(true)
+            console.log(Seladdress.address);
+            console.log(cart,Seladdress,totalPrice,0.04,0.4,totalPrice+0.44,{"id":"pi_1qweuiyrewjhgf","status":"success" });
+           dispatch(newOrder(cart,Seladdress,totalPrice,0.04,0.4,totalPrice+0.44,{"id":"pi_1qweuiyrewjhgf","status":"success" }))
+           navigate('/success')
+            }}>Submit Order</button>):(<></>)}
           </div>
           </>
           ):<></>}

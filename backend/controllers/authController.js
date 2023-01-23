@@ -167,9 +167,11 @@ exports.forgetPassword = catchAsyncErrors( async (req, res, next) => {
 // get all users
 exports.allUsers = catchAsyncErrors( async (req, res, next) => {
   const users = await User.find();
+  const totalusers = users.length
   res.status(200).json({
     success:true,
-    users
+    users,
+    totalusers
   })  
 })
 
@@ -207,6 +209,7 @@ exports.updateUser = catchAsyncErrors( async (req, res, next) => {
 // Delete user
 exports.deleteUser = catchAsyncErrors( async (req, res, next) => {
     const user = await User.findById(req.params.id);
+    console.log(req.params.id);
     if(!user){
         return next(new ErrorHandler(`User does not found with id ${req.params.id}`))
     }

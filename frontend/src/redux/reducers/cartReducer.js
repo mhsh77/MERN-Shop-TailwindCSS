@@ -17,6 +17,8 @@ export const cartSlice = createSlice({
                 itemInCart.quantity+=action.payload.quantity;
             }else{
                 itemInCart={
+                    "product":action.payload.product._id,
+                    "image":action.payload.product.images[0],
                     "name":action.payload.product.name,
                     "price":action.payload.product.price,
                     "_id":action.payload.product._id,

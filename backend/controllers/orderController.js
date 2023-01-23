@@ -88,7 +88,7 @@ exports.updateOrder = catchAsyncErrors( async (req, res, next) => {
     order.orderItems.forEach(async item=>{
         await updateStock(item.product,item.quantity)
     })
-    order.orderStatus = req.body.status
+    order.orderStatus = req.body.orderStatus
     order.deliveredAt = Date.now()
     await order.save({validateBeforeSave:false})
     res.status(200).json({

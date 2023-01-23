@@ -21,9 +21,14 @@ import ForgotPass from './components/ForgotPass';
 import ResetPass from './components/ResetPass';
 import Navbar from './components/Navbar';
 import Shipping from './components/Shipping';
-import Button from './components/layout/Button';
+import Button from './components/layout/Button1';
 import Dashboard from './components/Dashboard';
 import Orders from './components/Orders';
+import Success from './components/Success';
+import Users from './components/Users';
+import Products from './components/Products';
+import Button1 from './components/layout/Button1';
+import OrdersAdmin from './components/OrdersAdmin';
 
 function App() {
   const {user,role} = useSelector((state)=>state.authentication)
@@ -53,10 +58,16 @@ function App() {
             <Route path="/newpass" element={user?<Password user={user}/>:<Login/>}/>
             <Route path="/forgetpass" element={<ForgotPass />}/>
             <Route path="/resetpass/:token" element={<ResetPass />}/>
-            <Route path='/shipping' element={<Shipping/>} />
+            <Route path='/shipping' element={<Shipping user={user}/>} />
             <Route path='/sandbox' element={<Button/>} />
-            <Route path='/dashboard' element={(user && role=='admin')? <Dashboard/>:<Login/>} />
+            <Route path='/dashboard' element={(user && role=='admin')? <Dashboard user={user}/>:<Login/>} />
+            <Route path='/admin/users' element={(user && role=='admin')? <Users user={user}/>:<Login/>} />
             <Route path='/orders' element={(user)? <Orders user={user}/>:<Login/>} />
+            <Route path='/admin/products' element={(user && role=='admin')? <Products user={user}/>:<Login/>} />
+            <Route path='/admin/orders' element={(user && role=='admin')? <OrdersAdmin user={user}/>:<Login/>} />
+            <Route path='/success' element={<Success user={user}/>} />
+            <Route path='/test' element={<Button1/>} />
+            
           </Routes>
         </BrowserRouter>
       </div>

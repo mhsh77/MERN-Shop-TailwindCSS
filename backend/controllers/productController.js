@@ -15,7 +15,7 @@ exports.newProduct =catchAsyncErrors( async (req,res,next) => {
 })
 
 exports.getProducts =catchAsyncErrors( async(req,res,next)=>{
-    const resultsPerPage = 2;
+    const resultsPerPage = 4;
     const productCount = await Product.countDocuments();
 
     const apifeatures = new APIFeatures(Product.find(),req.query)
@@ -25,14 +25,14 @@ exports.getProducts =catchAsyncErrors( async(req,res,next)=>{
         console.log(req.query);
     const products = await apifeatures.query;
     
-    setTimeout(() => {
+    
      res.status(200).json({
         success:true,
         count:products.length,
         productCount,
         products
     })   
-    }, 3000);
+    
     
 })
 
@@ -48,10 +48,13 @@ exports.getSingleProduct =catchAsyncErrors( async(req,res,next) => {
 })
 
 exports.updateProduct = catchAsyncErrors( async(req,res,next) => {
+    console.log('update');
     let product = await Product.findById(req.params.id)
     if(!product){
         return next(new ErrorHandler('Product not found',404))
+        console.log(req.params.id);
     }
+    console.log(req);
     product = await Product.findByIdAndUpdate(req.params.id,req.body,{
         new:true,
         runValidators:true,
@@ -67,7 +70,7 @@ exports.deleteProduct =catchAsyncErrors( async (req,res,next) => {
     if(!product){
         return next(new ErrorHandler('Product not found',404))
     }
-    product = await Product.remove();
+    product = await product.remove();
     return res.status(200).json({
         success:true,
         message:'product deleted successfullly',

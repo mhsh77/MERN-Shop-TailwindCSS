@@ -22,7 +22,7 @@ function Profile({user}) {
       <div className='flex-1 text-primary items-center flex'>
         <div className='w-full max-w-md md:max-w-2xl m-auto bg-white rounded-lg border border-primaryBorder shadow-default py-10 px-16'>
           <h1 className='text-2xl font-medium  mt-4 mb-12 text-center'>
-              Log in to your account 🔐
+              Profile
           </h1>
           <div className='flex flex-col md:flex-row'>
             <div className='flex justify-center items-center flex-col'>
